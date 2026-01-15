@@ -9,369 +9,272 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body style="margin:0;">
+<body style="margin:0">
     <div id="root"></div>
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // Icon components (inline SVG)
         const Icons = {
-            FileText: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>,
-            CheckCircle: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-            Clock: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-            User: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>,
-            LogOut: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>,
-            Plus: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>,
-            Trash2: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>,
-            Edit: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>,
-            Users: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>,
-            Eye: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>,
-            EyeOff: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
+            FileText: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>,
+            CheckCircle: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
+            Clock: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
+            User: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>,
+            LogOut: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>,
+            Plus: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4"/></svg>,
+            Trash2: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>,
+            Edit: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>,
+            Users: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>,
+            Eye: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>,
+            EyeOff: ({className}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
         };
 
         function App() {
-            const [currentUser, setCurrentUser] = useState(null);
-            const [username, setUsername] = useState('');
-            const [password, setPassword] = useState('');
-            const [showPassword, setShowPassword] = useState(false);
-            const [documents, setDocuments] = useState([]);
-            const [employees, setEmployees] = useState([]);
-            const [selectedDoc, setSelectedDoc] = useState(null);
-            const [viewMode, setViewMode] = useState('list');
-            const [isAdmin, setIsAdmin] = useState(false);
-            
-            const [newDocTitle, setNewDocTitle] = useState('');
-            const [editingDocId, setEditingDocId] = useState(null);
-            const [documentImages, setDocumentImages] = useState([]);
+            const [state, setState] = useState({
+                currentUser: null,
+                username: '',
+                password: '',
+                showPassword: false,
+                documents: [],
+                employees: [],
+                selectedDoc: null,
+                viewMode: 'list',
+                isAdmin: false,
+                newDocTitle: '',
+                editingDocId: null,
+                documentImages: [],
+                newEmployeeName: '',
+                newEmployeeUsername: '',
+                newEmployeePassword: '',
+                newEmployeeDepartment: '',
+                editingEmployeeId: null,
+                selectedEmployeePermissions: [],
+                isDrawing: false,
+                signatureData: null,
+                showSignaturePad: false
+            });
+
             const contentEditableRef = useRef(null);
-            
-            const [newEmployeeName, setNewEmployeeName] = useState('');
-            const [newEmployeeUsername, setNewEmployeeUsername] = useState('');
-            const [newEmployeePassword, setNewEmployeePassword] = useState('');
-            const [newEmployeeDepartment, setNewEmployeeDepartment] = useState('');
-            const [editingEmployeeId, setEditingEmployeeId] = useState(null);
-            const [selectedEmployeePermissions, setSelectedEmployeePermissions] = useState([]);
-            
             const canvasRef = useRef(null);
-            const [isDrawing, setIsDrawing] = useState(false);
-            const [signatureData, setSignatureData] = useState(null);
-            const [showSignaturePad, setShowSignaturePad] = useState(false);
 
             useEffect(() => {
-                loadData();
+                const docsData = localStorage.getItem('ssow-documents');
+                const employeesData = localStorage.getItem('ssow-employees');
+                
+                if (docsData) {
+                    setState(s => ({...s, documents: JSON.parse(docsData)}));
+                }
+                
+                if (employeesData) {
+                    setState(s => ({...s, employees: JSON.parse(employeesData)}));
+                } else {
+                    const defaultEmployees = [{
+                        id: 'emp1',
+                        name: 'Administrator',
+                        username: 'admin',
+                        password: 'admin123',
+                        department: 'Management',
+                        isAdmin: true,
+                        permissions: []
+                    }];
+                    localStorage.setItem('ssow-employees', JSON.stringify(defaultEmployees));
+                    setState(s => ({...s, employees: defaultEmployees}));
+                }
             }, []);
 
-            const loadData = () => {
-                try {
-                    const docsData = localStorage.getItem('ssow-documents');
-                    if (docsData) {
-                        const loadedDocs = JSON.parse(docsData);
-                        setDocuments(loadedDocs.map(doc => ({
-                            ...doc,
-                            images: doc.images || [],
-                            signatures: doc.signatures || []
-                        })));
-                    }
-
-                    const employeesData = localStorage.getItem('ssow-employees');
-                    if (employeesData) {
-                        setEmployees(JSON.parse(employeesData));
-                    } else {
-                        const defaultEmployees = [{
-                            id: 'emp1',
-                            name: 'Administrator',
-                            username: 'admin',
-                            password: 'admin123',
-                            department: 'Management',
-                            isAdmin: true,
-                            permissions: []
-                        }];
-                        localStorage.setItem('ssow-employees', JSON.stringify(defaultEmployees));
-                        setEmployees(defaultEmployees);
-                    }
-                } catch (error) {
-                    console.error('Error loading data:', error);
-                }
+            const saveDocuments = (docs) => {
+                localStorage.setItem('ssow-documents', JSON.stringify(docs));
+                setState(s => ({...s, documents: docs}));
             };
 
-            const saveDocuments = (updatedDocs) => {
-                try {
-                    localStorage.setItem('ssow-documents', JSON.stringify(updatedDocs));
-                    setDocuments(updatedDocs);
-                } catch (error) {
-                    console.error('Error saving documents:', error);
-                    alert('Error saving document');
-                }
-            };
-
-            const saveEmployees = (updatedEmployees) => {
-                try {
-                    localStorage.setItem('ssow-employees', JSON.stringify(updatedEmployees));
-                    setEmployees(updatedEmployees);
-                } catch (error) {
-                    console.error('Error saving employees:', error);
-                    alert('Error saving employee');
-                }
+            const saveEmployees = (emps) => {
+                localStorage.setItem('ssow-employees', JSON.stringify(emps));
+                setState(s => ({...s, employees: emps}));
             };
 
             const handleLogin = () => {
-                const employee = employees.find(emp => 
-                    emp.username === username && emp.password === password
-                );
-                
-                if (employee) {
-                    setCurrentUser(employee);
-                    setIsAdmin(employee.isAdmin || false);
-                    setUsername('');
-                    setPassword('');
+                const emp = state.employees.find(e => e.username === state.username && e.password === state.password);
+                if (emp) {
+                    setState(s => ({...s, currentUser: emp, isAdmin: emp.isAdmin || false, username: '', password: ''}));
                 } else {
-                    alert('Invalid username or password');
+                    alert('Invalid credentials');
                 }
-            };
-
-            const handleLogout = () => {
-                setCurrentUser(null);
-                setIsAdmin(false);
-                setSelectedDoc(null);
-                setViewMode('list');
-            };
-
-            const handleSignDocument = () => {
-                if (!signatureData) {
-                    alert('Please draw your signature first');
-                    return;
-                }
-
-                const signature = {
-                    userName: currentUser.name,
-                    userId: currentUser.id,
-                    timestamp: new Date().toISOString(),
-                    date: new Date().toLocaleString(),
-                    signatureImage: signatureData
-                };
-
-                const updatedDocs = documents.map(doc => {
-                    if (doc.id === selectedDoc.id) {
-                        return {...doc, signatures: [...doc.signatures, signature]};
-                    }
-                    return doc;
-                });
-
-                saveDocuments(updatedDocs);
-                setSelectedDoc(null);
-                setSignatureData(null);
-                setShowSignaturePad(false);
-                setViewMode('list');
             };
 
             const getContentHTML = () => contentEditableRef.current?.innerHTML || '';
-            const setContentHTML = (html) => {
-                if (contentEditableRef.current) contentEditableRef.current.innerHTML = html;
+            const setContentHTML = (html) => { if (contentEditableRef.current) contentEditableRef.current.innerHTML = html; };
+
+            const applyFormat = (cmd, val = null) => {
+                document.execCommand(cmd, false, val);
+                contentEditableRef.current?.focus();
             };
 
             const handleAddDocument = () => {
-                const contentHTML = getContentHTML();
-                const contentText = contentEditableRef.current?.innerText || '';
-                
-                if (!newDocTitle.trim() || !contentText.trim()) {
-                    alert('Please fill in both title and content');
+                const content = getContentHTML();
+                const text = contentEditableRef.current?.innerText || '';
+                if (!state.newDocTitle.trim() || !text.trim()) {
+                    alert('Please fill in title and content');
                     return;
                 }
-
                 const newDoc = {
                     id: 'doc' + Date.now(),
-                    title: newDocTitle.trim(),
-                    content: contentHTML,
-                    images: documentImages,
+                    title: state.newDocTitle.trim(),
+                    content: content,
+                    images: state.documentImages,
                     signatures: []
                 };
-
-                saveDocuments([...documents, newDoc]);
-                setNewDocTitle('');
+                saveDocuments([...state.documents, newDoc]);
+                setState(s => ({...s, newDocTitle: '', documentImages: [], viewMode: 'list'}));
                 setContentHTML('');
-                setDocumentImages([]);
-                setViewMode('list');
-                alert('Document added successfully!');
+                alert('Document added!');
             };
 
             const handleEditDocument = () => {
-                const contentHTML = getContentHTML();
-                const contentText = contentEditableRef.current?.innerText || '';
-                
-                if (!newDocTitle.trim() || !contentText.trim()) {
-                    alert('Please fill in both title and content');
+                const content = getContentHTML();
+                const text = contentEditableRef.current?.innerText || '';
+                if (!state.newDocTitle.trim() || !text.trim()) {
+                    alert('Please fill in title and content');
                     return;
                 }
-
-                const updatedDocs = documents.map(doc => {
-                    if (doc.id === editingDocId) {
-                        return {...doc, title: newDocTitle.trim(), content: contentHTML, images: documentImages};
-                    }
-                    return doc;
-                });
-
+                const updatedDocs = state.documents.map(doc => 
+                    doc.id === state.editingDocId 
+                        ? {...doc, title: state.newDocTitle.trim(), content: content, images: state.documentImages}
+                        : doc
+                );
                 saveDocuments(updatedDocs);
-                setNewDocTitle('');
+                setState(s => ({...s, newDocTitle: '', documentImages: [], editingDocId: null, viewMode: 'list'}));
                 setContentHTML('');
-                setDocumentImages([]);
-                setEditingDocId(null);
-                setViewMode('list');
-                alert('Document updated successfully!');
+                alert('Document updated!');
+            };
+
+            const startEditDocument = (doc) => {
+                setState(s => ({...s, editingDocId: doc.id, newDocTitle: doc.title, documentImages: doc.images || [], viewMode: 'add-document'}));
+                setTimeout(() => setContentHTML(doc.content || ''), 100);
             };
 
             const handleDeleteDocument = (docId) => {
-                if (window.confirm('Are you sure you want to delete this document?')) {
-                    saveDocuments(documents.filter(doc => doc.id !== docId));
-                    if (selectedDoc?.id === docId) {
-                        setSelectedDoc(null);
-                        setViewMode('list');
-                    }
+                if (window.confirm('Delete this document?')) {
+                    saveDocuments(state.documents.filter(d => d.id !== docId));
                     alert('Document deleted!');
                 }
             };
 
-            const startEditDocument = (doc) => {
-                setEditingDocId(doc.id);
-                setNewDocTitle(doc.title);
-                setDocumentImages(doc.images || []);
-                setViewMode('add-document');
-                setTimeout(() => setContentHTML(doc.content || ''), 100);
-            };
-
             const handleAddEmployee = () => {
-                if (!newEmployeeName.trim() || !newEmployeeUsername.trim() || !newEmployeePassword.trim()) {
-                    alert('Please fill in all required fields');
+                if (!state.newEmployeeName.trim() || !state.newEmployeeUsername.trim() || !state.newEmployeePassword.trim()) {
+                    alert('Fill in all fields');
                     return;
                 }
-
-                if (employees.some(emp => emp.username === newEmployeeUsername.trim())) {
-                    alert('Username already exists');
+                if (state.employees.some(e => e.username === state.newEmployeeUsername.trim())) {
+                    alert('Username exists');
                     return;
                 }
-
-                const newEmployee = {
+                const newEmp = {
                     id: 'emp' + Date.now(),
-                    name: newEmployeeName.trim(),
-                    username: newEmployeeUsername.trim(),
-                    password: newEmployeePassword.trim(),
-                    department: newEmployeeDepartment.trim(),
+                    name: state.newEmployeeName.trim(),
+                    username: state.newEmployeeUsername.trim(),
+                    password: state.newEmployeePassword.trim(),
+                    department: state.newEmployeeDepartment.trim(),
                     isAdmin: false,
-                    permissions: selectedEmployeePermissions
+                    permissions: state.selectedEmployeePermissions
                 };
-
-                saveEmployees([...employees, newEmployee]);
-                setNewEmployeeName('');
-                setNewEmployeeUsername('');
-                setNewEmployeePassword('');
-                setNewEmployeeDepartment('');
-                setSelectedEmployeePermissions([]);
-                setViewMode('list');
+                saveEmployees([...state.employees, newEmp]);
+                setState(s => ({...s, newEmployeeName: '', newEmployeeUsername: '', newEmployeePassword: '', newEmployeeDepartment: '', selectedEmployeePermissions: [], viewMode: 'list'}));
                 alert('Employee added!');
             };
 
             const handleEditEmployee = () => {
-                if (!newEmployeeName.trim() || !newEmployeeUsername.trim()) {
-                    alert('Please fill in all required fields');
+                if (!state.newEmployeeName.trim() || !state.newEmployeeUsername.trim()) {
+                    alert('Fill in required fields');
                     return;
                 }
-
-                const updatedEmployees = employees.map(emp => {
-                    if (emp.id === editingEmployeeId) {
-                        return {
-                            ...emp,
-                            name: newEmployeeName.trim(),
-                            username: newEmployeeUsername.trim(),
-                            password: newEmployeePassword.trim() || emp.password,
-                            department: newEmployeeDepartment.trim(),
-                            permissions: selectedEmployeePermissions
-                        };
-                    }
-                    return emp;
-                });
-
-                saveEmployees(updatedEmployees);
-                setNewEmployeeName('');
-                setNewEmployeeUsername('');
-                setNewEmployeePassword('');
-                setNewEmployeeDepartment('');
-                setSelectedEmployeePermissions([]);
-                setEditingEmployeeId(null);
-                setViewMode('list');
+                const updatedEmps = state.employees.map(e =>
+                    e.id === state.editingEmployeeId
+                        ? {...e, name: state.newEmployeeName.trim(), username: state.newEmployeeUsername.trim(), password: state.newEmployeePassword.trim() || e.password, department: state.newEmployeeDepartment.trim(), permissions: state.selectedEmployeePermissions}
+                        : e
+                );
+                saveEmployees(updatedEmps);
+                setState(s => ({...s, newEmployeeName: '', newEmployeeUsername: '', newEmployeePassword: '', newEmployeeDepartment: '', selectedEmployeePermissions: [], editingEmployeeId: null, viewMode: 'list'}));
                 alert('Employee updated!');
             };
 
+            const startEditEmployee = (emp) => {
+                setState(s => ({...s, editingEmployeeId: emp.id, newEmployeeName: emp.name, newEmployeeUsername: emp.username, newEmployeePassword: '', newEmployeeDepartment: emp.department || '', selectedEmployeePermissions: emp.permissions || [], viewMode: 'add-employee'}));
+            };
+
             const handleDeleteEmployee = (empId) => {
-                const emp = employees.find(e => e.id === empId);
-                if (emp?.isAdmin) {
-                    alert('Cannot delete admin account');
-                    return;
-                }
-                if (window.confirm('Delete this employee?')) {
-                    saveEmployees(employees.filter(e => e.id !== empId));
+                const emp = state.employees.find(e => e.id === empId);
+                if (emp?.isAdmin) { alert('Cannot delete admin'); return; }
+                if (window.confirm('Delete employee?')) {
+                    saveEmployees(state.employees.filter(e => e.id !== empId));
                     alert('Employee deleted!');
                 }
             };
 
-            const startEditEmployee = (emp) => {
-                setEditingEmployeeId(emp.id);
-                setNewEmployeeName(emp.name);
-                setNewEmployeeUsername(emp.username);
-                setNewEmployeePassword('');
-                setNewEmployeeDepartment(emp.department || '');
-                setSelectedEmployeePermissions(emp.permissions || []);
-                setViewMode('add-employee');
-            };
-
             const togglePermission = (docId) => {
-                setSelectedEmployeePermissions(prev => 
-                    prev.includes(docId) ? prev.filter(id => id !== docId) : [...prev, docId]
+                setState(s => ({
+                    ...s,
+                    selectedEmployeePermissions: s.selectedEmployeePermissions.includes(docId)
+                        ? s.selectedEmployeePermissions.filter(id => id !== docId)
+                        : [...s.selectedEmployeePermissions, docId]
+                }));
+            };
+
+            const handleImageUpload = (e) => {
+                Array.from(e.target.files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            setState(s => ({
+                                ...s,
+                                documentImages: [...s.documentImages, {id: Date.now() + Math.random(), data: event.target.result, name: file.name}]
+                            }));
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            };
+
+            const removeImage = (imageId) => {
+                setState(s => ({...s, documentImages: s.documentImages.filter(img => img.id !== imageId)}));
+            };
+
+            const handleSignDocument = () => {
+                if (!state.signatureData) { alert('Draw signature first'); return; }
+                const sig = {
+                    userName: state.currentUser.name,
+                    userId: state.currentUser.id,
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleString(),
+                    signatureImage: state.signatureData
+                };
+                const updatedDocs = state.documents.map(doc =>
+                    doc.id === state.selectedDoc.id ? {...doc, signatures: [...doc.signatures, sig]} : doc
                 );
+                saveDocuments(updatedDocs);
+                setState(s => ({...s, selectedDoc: null, signatureData: null, showSignaturePad: false, viewMode: 'list'}));
             };
 
-            const hasUserSigned = (doc) => doc.signatures.some(sig => sig.userId === currentUser.id);
-            
-            const canUserAccessDocument = (doc) => {
-                if (isAdmin) return true;
-                if (!currentUser.permissions || currentUser.permissions.length === 0) return true;
-                return currentUser.permissions.includes(doc.id);
-            };
-
-            const getAccessibleDocuments = () => documents.filter(canUserAccessDocument);
-
-            // Signature pad functions
             const getCoordinates = (e, canvas) => {
                 const rect = canvas.getBoundingClientRect();
                 const scaleX = canvas.width / rect.width;
                 const scaleY = canvas.height / rect.height;
-                let clientX, clientY;
-                if (e.touches?.[0]) {
-                    clientX = e.touches[0].clientX;
-                    clientY = e.touches[0].clientY;
-                } else {
-                    clientX = e.clientX;
-                    clientY = e.clientY;
-                }
-                return {
-                    x: (clientX - rect.left) * scaleX,
-                    y: (clientY - rect.top) * scaleY
-                };
+                let clientX = e.touches?.[0]?.clientX || e.clientX;
+                let clientY = e.touches?.[0]?.clientY || e.clientY;
+                return {x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY};
             };
 
             const startDrawing = (e) => {
-                const canvas = canvasRef.current;
-                const { x, y } = getCoordinates(e, canvas);
-                const ctx = canvas.getContext('2d');
+                const {x, y} = getCoordinates(e, canvasRef.current);
+                const ctx = canvasRef.current.getContext('2d');
                 ctx.beginPath();
                 ctx.moveTo(x, y);
-                setIsDrawing(true);
+                setState(s => ({...s, isDrawing: true}));
             };
 
             const draw = (e) => {
-                if (!isDrawing) return;
+                if (!state.isDrawing) return;
                 e.preventDefault();
-                const canvas = canvasRef.current;
-                const { x, y } = getCoordinates(e, canvas);
-                const ctx = canvas.getContext('2d');
+                const {x, y} = getCoordinates(e, canvasRef.current);
+                const ctx = canvasRef.current.getContext('2d');
                 ctx.lineTo(x, y);
                 ctx.strokeStyle = '#000';
                 ctx.lineWidth = 2;
@@ -381,92 +284,106 @@
             };
 
             const stopDrawing = () => {
-                if (isDrawing) {
-                    setIsDrawing(false);
-                    setSignatureData(canvasRef.current.toDataURL());
+                if (state.isDrawing) {
+                    setState(s => ({...s, isDrawing: false, signatureData: canvasRef.current.toDataURL()}));
                 }
             };
 
             const clearSignature = () => {
-                const canvas = canvasRef.current;
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                setSignatureData(null);
+                const ctx = canvasRef.current.getContext('2d');
+                ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+                setState(s => ({...s, signatureData: null}));
             };
 
-            const handleImageUpload = (e) => {
-                Array.from(e.target.files).forEach(file => {
-                    if (file.type.startsWith('image/')) {
-                        const reader = new FileReader();
-                        reader.onload = (event) => {
-                            setDocumentImages(prev => [...prev, {
-                                id: Date.now() + Math.random(),
-                                data: event.target.result,
-                                name: file.name
-                            }]);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
+            const hasUserSigned = (doc) => doc.signatures?.some(sig => sig.userId === state.currentUser.id);
+            const canUserAccessDocument = (doc) => {
+                if (state.isAdmin) return true;
+                if (!state.currentUser.permissions || state.currentUser.permissions.length === 0) return true;
+                return state.currentUser.permissions.includes(doc.id);
             };
+            const accessibleDocs = state.documents.filter(canUserAccessDocument);
 
-            const removeImage = (imageId) => {
-                setDocumentImages(prev => prev.filter(img => img.id !== imageId));
-            };
-
-            const applyFormat = (command, value = null) => {
-                document.execCommand(command, false, value);
-                contentEditableRef.current?.focus();
-            };
-
-            // LOGIN SCREEN
-            if (!currentUser) {
+            // LOGIN
+            if (!state.currentUser) {
                 return (
                     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
                         <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
                             <div className="text-center mb-8">
-                                <Icons.FileText className="w-16 h-16 text-indigo-600 mx-auto mb-4" />
-                                <h1 className="text-3xl font-bold text-gray-900 mb-2">Health & Safety</h1>
+                                <Icons.FileText className="w-16 h-16 text-indigo-600 mx-auto mb-4"/>
+                                <h1 className="text-3xl font-bold mb-2">Health & Safety</h1>
                                 <p className="text-gray-600">Document Signing System</p>
                             </div>
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Username</label>
-                                    <input
-                                        type="text"
-                                        value={username}
-                                        onChange={(e) => setUsername(e.target.value)}
-                                        onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-                                        placeholder="Enter username"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                    />
+                                    <label className="block text-sm font-medium mb-2">Username</label>
+                                    <input type="text" value={state.username} onChange={(e) => setState(s => ({...s, username: e.target.value}))} onKeyPress={(e) => e.key === 'Enter' && handleLogin()} className="w-full px-4 py-3 border rounded-lg" placeholder="Username"/>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                                    <label className="block text-sm font-medium mb-2">Password</label>
                                     <div className="relative">
-                                        <input
-                                            type={showPassword ? "text" : "password"}
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-                                            placeholder="Enter password"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2"
-                                        >
-                                            {showPassword ? <Icons.EyeOff className="w-5 h-5 text-gray-500" /> : <Icons.Eye className="w-5 h-5 text-gray-500" />}
+                                        <input type={state.showPassword ? "text" : "password"} value={state.password} onChange={(e) => setState(s => ({...s, password: e.target.value}))} onKeyPress={(e) => e.key === 'Enter' && handleLogin()} className="w-full px-4 py-3 border rounded-lg" placeholder="Password"/>
+                                        <button type="button" onClick={() => setState(s => ({...s, showPassword: !s.showPassword}))} className="absolute right-3 top-1/2 -translate-y-1/2">
+                                            {state.showPassword ? <Icons.EyeOff className="w-5 h-5 text-gray-500"/> : <Icons.Eye className="w-5 h-5 text-gray-500"/>}
                                         </button>
                                     </div>
                                 </div>
-                                <button
-                                    onClick={handleLogin}
-                                    disabled={!username.trim() || !password.trim()}
-                                    className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 disabled:bg-gray-300"
-                                >
-                                    Sign In
+                                <button onClick={handleLogin} disabled={!state.username.trim() || !state.password.trim()} className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 disabled:bg-gray-300">Sign In</button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // ADD/EDIT DOCUMENT
+            if (state.viewMode === 'add-document') {
+                return (
+                    <div className="min-h-screen bg-gray-50">
+                        <div className="bg-white shadow border-b">
+                            <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+                                <h1 className="text-xl font-bold">{state.editingDocId ? 'Edit Document' : 'Add Document'}</h1>
+                                <button onClick={() => setState(s => ({...s, viewMode: 'list', newDocTitle: '', documentImages: [], editingDocId: null}))} className="text-gray-600">Cancel</button>
+                            </div>
+                        </div>
+                        <div className="max-w-4xl mx-auto p-4">
+                            <div className="bg-white rounded-lg shadow p-6 space-y-6">
+                                <div>
+                                    <label className="block text-sm font-medium mb-2">Title</label>
+                                    <input type="text" value={state.newDocTitle} onChange={(e) => setState(s => ({...s, newDocTitle: e.target.value}))} className="w-full px-4 py-3 border rounded-lg" placeholder="Document title"/>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium mb-2">Content</label>
+                                    <div className="border rounded-t-lg bg-gray-50 p-2 flex gap-1 flex-wrap">
+                                        <button onClick={() => applyFormat('bold')} className="px-3 py-1 border rounded hover:bg-gray-200 font-bold">B</button>
+                                        <button onClick={() => applyFormat('italic')} className="px-3 py-1 border rounded hover:bg-gray-200 italic">I</button>
+                                        <button onClick={() => applyFormat('underline')} className="px-3 py-1 border rounded hover:bg-gray-200 underline">U</button>
+                                        <div className="w-px bg-gray-300 mx-1"></div>
+                                        <button onClick={() => applyFormat('insertUnorderedList')} className="px-3 py-1 border rounded hover:bg-gray-200">• List</button>
+                                        <button onClick={() => applyFormat('insertOrderedList')} className="px-3 py-1 border rounded hover:bg-gray-200">1. List</button>
+                                        <div className="w-px bg-gray-300 mx-1"></div>
+                                        <button onClick={() => applyFormat('formatBlock', 'h1')} className="px-3 py-1 border rounded hover:bg-gray-200 text-lg font-bold">H1</button>
+                                        <button onClick={() => applyFormat('formatBlock', 'h2')} className="px-3 py-1 border rounded hover:bg-gray-200 font-bold">H2</button>
+                                        <button onClick={() => applyFormat('formatBlock', 'p')} className="px-3 py-1 border rounded hover:bg-gray-200 text-sm">Normal</button>
+                                    </div>
+                                    <div ref={contentEditableRef} contentEditable onPaste={(e) => {e.preventDefault(); document.execCommand('insertHTML', false, e.clipboardData.getData('text/plain').replace(/\n/g, '<br>'));}} className="w-full min-h-96 px-4 py-3 border border-t-0 rounded-b-lg bg-white overflow-auto" style={{maxHeight: '600px', lineHeight: '1.8'}}></div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium mb-2">Images</label>
+                                    <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="w-full px-4 py-3 border rounded-lg"/>
+                                    {state.documentImages.length > 0 && (
+                                        <div className="mt-4 grid grid-cols-3 gap-3">
+                                            {state.documentImages.map(img => (
+                                                <div key={img.id} className="relative group">
+                                                    <img src={img.data} alt={img.name} className="w-full h-32 object-cover rounded border"/>
+                                                    <button onClick={() => removeImage(img.id)} className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100">
+                                                        <Icons.Trash2 className="w-4 h-4"/>
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                <button onClick={state.editingDocId ? handleEditDocument : handleAddDocument} className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700">
+                                    {state.editingDocId ? 'Save Changes' : 'Add Document'}
                                 </button>
                             </div>
                         </div>
@@ -474,58 +391,288 @@
                 );
             }
 
-            // MAIN APP (simplified for space - showing structure)
-            const accessibleDocs = getAccessibleDocuments();
+            // ADD/EDIT EMPLOYEE
+            if (state.viewMode === 'add-employee') {
+                return (
+                    <div className="min-h-screen bg-gray-50">
+                        <div className="bg-white shadow border-b">
+                            <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+                                <h1 className="text-xl font-bold">{state.editingEmployeeId ? 'Edit Employee' : 'Add Employee'}</h1>
+                                <button onClick={() => setState(s => ({...s, viewMode: 'manage-employees', newEmployeeName: '', newEmployeeUsername: '', newEmployeePassword: '', newEmployeeDepartment: '', selectedEmployeePermissions: [], editingEmployeeId: null}))} className="text-gray-600">Cancel</button>
+                            </div>
+                        </div>
+                        <div className="max-w-4xl mx-auto p-4">
+                            <div className="bg-white rounded-lg shadow p-6 space-y-6">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2">Name *</label>
+                                        <input type="text" value={state.newEmployeeName} onChange={(e) => setState(s => ({...s, newEmployeeName: e.target.value}))} className="w-full px-4 py-3 border rounded-lg" placeholder="Full name"/>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2">Department</label>
+                                        <input type="text" value={state.newEmployeeDepartment} onChange={(e) => setState(s => ({...s, newEmployeeDepartment: e.target.value}))} className="w-full px-4 py-3 border rounded-lg" placeholder="Department"/>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2">Username *</label>
+                                        <input type="text" value={state.newEmployeeUsername} onChange={(e) => setState(s => ({...s, newEmployeeUsername: e.target.value}))} className="w-full px-4 py-3 border rounded-lg" placeholder="Username"/>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2">Password *</label>
+                                        <input type="password" value={state.newEmployeePassword} onChange={(e) => setState(s => ({...s, newEmployeePassword: e.target.value}))} className="w-full px-4 py-3 border rounded-lg" placeholder="Password"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium mb-3">Document Permissions</label>
+                                    <div className="border rounded-lg p-4 max-h-64 overflow-y-auto space-y-2">
+                                        {state.documents.map(doc => (
+                                            <label key={doc.id} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                                <input type="checkbox" checked={state.selectedEmployeePermissions.includes(doc.id)} onChange={() => togglePermission(doc.id)} className="w-4 h-4"/>
+                                                <span className="text-sm">{doc.title}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                                <button onClick={state.editingEmployeeId ? handleEditEmployee : handleAddEmployee} className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700">
+                                    {state.editingEmployeeId ? 'Save Changes' : 'Add Employee'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
 
+            // MANAGE EMPLOYEES
+            if (state.viewMode === 'manage-employees') {
+                return (
+                    <div className="min-h-screen bg-gray-50">
+                        <div className="bg-white shadow border-b">
+                            <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+                                <h1 className="text-xl font-bold">Manage Employees</h1>
+                                <div className="flex gap-3">
+                                    <button onClick={() => setState(s => ({...s, viewMode: 'add-employee'}))} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg">
+                                        <Icons.Plus className="w-4 h-4"/> Add Employee
+                                    </button>
+                                    <button onClick={() => setState(s => ({...s, viewMode: 'list'}))} className="text-indigo-600">← Back</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="max-w-6xl mx-auto p-4">
+                            <div className="bg-white rounded-lg shadow overflow-hidden">
+                                <table className="w-full">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Username</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Department</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Access</th>
+                                            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y">
+                                        {state.employees.map(emp => (
+                                            <tr key={emp.id} className="hover:bg-gray-50">
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="flex items-center gap-3">
+                                                        <Icons.User className="w-5 h-5 text-gray-400"/>
+                                                        <span className="font-medium">{emp.name}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-600">{emp.username}</td>
+                                                <td className="px-6 py-4 text-sm text-gray-600">{emp.department || '-'}</td>
+                                                <td className="px-6 py-4 text-sm text-gray-600">
+                                                    {emp.isAdmin ? 'All' : (!emp.permissions || emp.permissions.length === 0) ? 'All' : `${emp.permissions.length} docs`}
+                                                </td>
+                                                <td className="px-6 py-4 text-right">
+                                                    <div className="flex justify-end gap-2">
+                                                        <button onClick={() => startEditEmployee(emp)} className="p-2 text-blue-600 hover:bg-blue-50 rounded"><Icons.Edit className="w-4 h-4"/></button>
+                                                        {!emp.isAdmin && <button onClick={() => handleDeleteEmployee(emp.id)} className="p-2 text-red-600 hover:bg-red-50 rounded"><Icons.Trash2 className="w-4 h-4"/></button>}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // VIEW DOCUMENT
+            if (state.viewMode === 'document' && state.selectedDoc) {
+                const signed = hasUserSigned(state.selectedDoc);
+                return (
+                    <div className="min-h-screen bg-gray-50 p-4">
+                        <div className="max-w-4xl mx-auto">
+                            <div className="bg-white rounded-lg shadow-lg p-6">
+                                <div className="flex justify-between items-center mb-6">
+                                    <h2 className="text-2xl font-bold">{state.selectedDoc.title}</h2>
+                                    <button onClick={() => setState(s => ({...s, selectedDoc: null, viewMode: 'list'}))} className="text-gray-600">← Back</button>
+                                </div>
+                                <div className="bg-gray-50 rounded-lg p-6 mb-6 max-h-96 overflow-y-auto">
+                                    <div dangerouslySetInnerHTML={{__html: state.selectedDoc.content}} style={{lineHeight: '1.8'}}/>
+                                    {state.selectedDoc.images?.length > 0 && (
+                                        <div className="mt-6 pt-4 border-t">
+                                            <h3 className="font-semibold mb-3">Images:</h3>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                {state.selectedDoc.images.map(img => (
+                                                    <div key={img.id} className="border rounded-lg overflow-hidden">
+                                                        <img src={img.data} alt={img.name} className="w-full"/>
+                                                        <p className="text-xs p-2 bg-gray-50">{img.name}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                {signed ? (
+                                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
+                                        <Icons.CheckCircle className="w-6 h-6 text-green-600"/>
+                                        <div className="flex-1">
+                                            <p className="font-medium text-green-900">Already signed</p>
+                                            <p className="text-sm text-green-700">Signed on {state.selectedDoc.signatures.find(s => s.userId === state.currentUser.id)?.date}</p>
+                                        </div>
+                                        {state.selectedDoc.signatures.find(s => s.userId === state.currentUser.id)?.signatureImage && (
+                                            <img src={state.selectedDoc.signatures.find(s => s.userId === state.currentUser.id)?.signatureImage} alt="Signature" className="h-12 border rounded bg-white px-2"/>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div className="space-y-4">
+                                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                            <p className="text-sm text-yellow-800">By signing, I confirm I have read and understood this document.</p>
+                                        </div>
+                                        {!state.showSignaturePad ? (
+                                            <button onClick={() => setState(s => ({...s, showSignaturePad: true}))} className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2">
+                                                <Icons.CheckCircle className="w-5 h-5"/> Sign Document
+                                            </button>
+                                        ) : (
+                                            <div className="space-y-4">
+                                                <div className="border-2 rounded-lg p-4 bg-white">
+                                                    <p className="text-sm font-medium mb-3">Draw your signature:</p>
+                                                    <canvas ref={canvasRef} width={600} height={200} onMouseDown={startDrawing} onMouseMove={draw} onMouseUp={stopDrawing} onMouseLeave={stopDrawing} onTouchStart={startDrawing} onTouchMove={draw} onTouchEnd={stopDrawing} className="border-2 rounded w-full cursor-crosshair bg-white" style={{touchAction: 'none', maxWidth: '600px', height: 'auto'}}/>
+                                                    <div className="flex gap-3 mt-3">
+                                                        <button onClick={clearSignature} className="flex-1 px-4 py-2 border rounded-lg">Clear</button>
+                                                        <button onClick={() => {setState(s => ({...s, showSignaturePad: false, signatureData: null})); clearSignature();}} className="flex-1 px-4 py-2 border rounded-lg">Cancel</button>
+                                                    </div>
+                                                </div>
+                                                <button onClick={handleSignDocument} disabled={!state.signatureData} className="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 disabled:bg-gray-300 flex items-center justify-center gap-2">
+                                                    <Icons.CheckCircle className="w-5 h-5"/> Confirm Signature
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // ADMIN VIEW
+            if (state.viewMode === 'admin') {
+                return (
+                    <div className="min-h-screen bg-gray-50">
+                        <div className="bg-white shadow border-b">
+                            <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+                                <h1 className="text-xl font-bold">All Signatures</h1>
+                                <button onClick={() => setState(s => ({...s, viewMode: 'list'}))} className="text-indigo-600">← Back</button>
+                            </div>
+                        </div>
+                        <div className="max-w-6xl mx-auto p-4 space-y-6">
+                            {state.documents.map(doc => (
+                                <div key={doc.id} className="bg-white rounded-lg shadow p-6">
+                                    <h3 className="text-xl font-bold mb-4">{doc.title}</h3>
+                                    {doc.signatures?.length === 0 ? (
+                                        <p className="text-gray-500 italic">No signatures yet</p>
+                                    ) : (
+                                        <div className="space-y-2">
+                                            {doc.signatures.map((sig, idx) => (
+                                                <div key={idx} className="flex items-center justify-between bg-gray-50 rounded p-3">
+                                                    <div className="flex items-center gap-3">
+                                                        <Icons.User className="w-5 h-5 text-gray-400"/>
+                                                        <div>
+                                                            <span className="font-medium block">{sig.userName}</span>
+                                                            {sig.signatureImage && <img src={sig.signatureImage} alt="Signature" className="h-8 mt-1 border rounded bg-white px-2"/>}
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-gray-600 text-sm">
+                                                        <Icons.Clock className="w-4 h-4"/>
+                                                        <span>{sig.date}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    <div className="mt-4 pt-4 border-t">
+                                        <p className="text-sm text-gray-600">Total: <span className="font-medium">{doc.signatures?.length || 0}</span></p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                );
+            }
+
+            // DOCUMENT LIST
             return (
                 <div className="min-h-screen bg-gray-50">
-                    <div className="bg-white shadow-sm border-b">
+                    <div className="bg-white shadow border-b">
                         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
                             <div>
                                 <h1 className="text-xl font-bold">Health & Safety Documents</h1>
-                                <p className="text-sm text-gray-600">Signed in as {currentUser.name} {isAdmin && '(Admin)'}</p>
+                                <p className="text-sm text-gray-600">Signed in as {state.currentUser.name} {state.isAdmin && '(Admin)'}</p>
                             </div>
                             <div className="flex gap-3">
-                                {isAdmin && (
+                                {state.isAdmin && (
                                     <>
-                                        <button onClick={() => setViewMode('manage-employees')} className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg">
-                                            <Icons.Users className="w-4 h-4" /> Employees
+                                        <button onClick={() => setState(s => ({...s, viewMode: 'manage-employees'}))} className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg">
+                                            <Icons.Users className="w-4 h-4"/> Employees
                                         </button>
-                                        <button onClick={() => setViewMode('add-document')} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg">
-                                            <Icons.Plus className="w-4 h-4" /> Add Document
+                                        <button onClick={() => setState(s => ({...s, viewMode: 'add-document'}))} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg">
+                                            <Icons.Plus className="w-4 h-4"/> Add Document
                                         </button>
                                     </>
                                 )}
-                                <button onClick={() => setViewMode('admin')} className="text-indigo-600">View Signatures</button>
-                                <button onClick={handleLogout} className="flex items-center gap-2"><Icons.LogOut className="w-4 h-4" /> Logout</button>
+                                <button onClick={() => setState(s => ({...s, viewMode: 'admin'}))} className="text-indigo-600">View Signatures</button>
+                                <button onClick={() => setState(s => ({...s, currentUser: null, isAdmin: false, viewMode: 'list'}))} className="flex items-center gap-2">
+                                    <Icons.LogOut className="w-4 h-4"/> Logout
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div className="max-w-6xl mx-auto p-4">
-                        <div className="grid gap-4 md:grid-cols-3">
-                            {accessibleDocs.map(doc => {
-                                const signed = hasUserSigned(doc);
-                                return (
-                                    <div key={doc.id} className="bg-white rounded-lg shadow p-6 cursor-pointer relative" onClick={() => {setSelectedDoc(doc); setViewMode('document');}}>
-                                        <div className="flex items-start justify-between mb-4">
-                                            <Icons.FileText className="w-8 h-8 text-indigo-600" />
-                                            {signed && <Icons.CheckCircle className="w-6 h-6 text-green-500" />}
-                                        </div>
-                                        <h3 className="font-bold mb-2">{doc.title}</h3>
-                                        <div className="text-sm text-gray-600 mb-4">{doc.signatures.length} signatures</div>
-                                        <div className={`text-sm font-medium ${signed ? 'text-green-600' : 'text-amber-600'}`}>
-                                            {signed ? '✓ Signed' : 'Pending'}
-                                        </div>
-                                        {isAdmin && (
-                                            <div className="absolute top-2 right-2 flex gap-2">
-                                                <button onClick={(e) => {e.stopPropagation(); startEditDocument(doc);}} className="p-2 bg-blue-50 text-blue-600 rounded"><Icons.Edit className="w-4 h-4" /></button>
-                                                <button onClick={(e) => {e.stopPropagation(); handleDeleteDocument(doc.id);}} className="p-2 bg-red-50 text-red-600 rounded"><Icons.Trash2 className="w-4 h-4" /></button>
+                        {accessibleDocs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <Icons.FileText className="w-16 h-16 text-gray-400 mx-auto mb-4"/>
+                                <h3 className="text-lg font-medium mb-2">No documents yet</h3>
+                                <p className="text-gray-600">Click "Add Document" to create your first SSOW document.</p>
+                            </div>
+                        ) : (
+                            <div className="grid gap-4 md:grid-cols-3">
+                                {accessibleDocs.map(doc => {
+                                    const signed = hasUserSigned(doc);
+                                    return (
+                                        <div key={doc.id} className="bg-white rounded-lg shadow p-6 relative cursor-pointer" onClick={() => setState(s => ({...s, selectedDoc: doc, viewMode: 'document'}))}>
+                                            <div className="flex items-start justify-between mb-4">
+                                                <Icons.FileText className="w-8 h-8 text-indigo-600"/>
+                                                {signed && <Icons.CheckCircle className="w-6 h-6 text-green-500"/>}
                                             </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </div>
+                                            <h3 className="font-bold mb-2">{doc.title}</h3>
+                                            <div className="text-sm text-gray-600 mb-4">{doc.signatures?.length || 0} signatures</div>
+                                            <div className={`text-sm font-medium ${signed ? 'text-green-600' : 'text-amber-600'}`}>
+                                                {signed ? '✓ Signed' : 'Pending'}
+                                            </div>
+                                            {state.isAdmin && (
+                                                <div className="absolute top-2 right-2 flex gap-2 bg-white rounded-lg shadow p-1">
+                                                    <button onClick={(e) => {e.stopPropagation(); startEditDocument(doc);}} className="p-2 bg-blue-50 text-blue-600 rounded"><Icons.Edit className="w-4 h-4"/></button>
+                                                    <button onClick={(e) => {e.stopPropagation(); handleDeleteDocument(doc.id);}} className="p-2 bg-red-50 text-red-600 rounded"><Icons.Trash2 className="w-4 h-4"/></button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
                 </div>
             );
